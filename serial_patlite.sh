@@ -29,7 +29,7 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
-while getopts r:g:y:a: OPT
+while getopts r:g:y: OPT
 do
   case $OPT in
     "r" ) FLG_R="TRUE" ; VALUE_R="$OPTARG" ;;
