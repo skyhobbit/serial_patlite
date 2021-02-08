@@ -18,15 +18,14 @@
 
 
 #sample
-# ./serial_patlite.sh -g0 -y0 -r0
-# ./serial_patlite.sh -g1 -y1 -r1
-# ./serial_patlite.sh -a2
+# ./serial_patlite.sh -g0 -y1 -r2
 
 
 if [ $# -lt 1 ]; then
   echo "$# parameter." 1>&2
   echo "You need more than 1 parameter." 1>&2
-  echo "Usage: $CMDNAME [-aVALUE] [-r VALUE] [-g VALUE] [-y VALUE]" 1>&2
+  echo "Usage: $CMDNAME [-r VALUE] [-g VALUE] [-y VALUE]" 1>&2
+  echo "0:off, 1:on, 2:blink" 1>&2
   exit 1
 fi
 
@@ -36,8 +35,8 @@ do
     "r" ) FLG_R="TRUE" ; VALUE_R="$OPTARG" ;;
     "g" ) FLG_G="TRUE" ; VALUE_G="$OPTARG" ;;
     "y" ) FLG_Y="TRUE" ; VALUE_Y="$OPTARG" ;;
-    "a" ) FLG_A="TRUE" ; VALUE_A="$OPTARG" ;;
-      * ) echo "Usage: $CMDNAME [-aVALUE] [-r VALUE] [-g VALUE] [-y VALUE]" 1>&2
+      * ) echo "Usage: $CMDNAME [-r VALUE] [-g VALUE] [-y VALUE]" 1>&2
+          echo "0:off, 1:on, 2:blink" 1>&2
           exit 1 ;;
   esac
 done
@@ -49,55 +48,43 @@ stty 9600 cs8 < /dev/ttyS0
 # (Official Sample) all lignts on and sound pipipi
 #echo "@??12>!" > /dev/ttyS0
 
-if [ "$1" == "-a0" ]; then
-    # all off
-    echo "@??0??!" > /dev/ttyS0
-    exit
-fi
-
-if [ "$1" == "-a1" ]; then
-    # all lights on
-    echo "@??107!" > /dev/ttyS0
-    exit
-fi
-
-if [ "$1" == "-a2" ]; then
-    # all off
-    echo "@??0??!" > /dev/ttyS0
-    # all blink
-    echo "@??1>0!" > /dev/ttyS0
-    exit
-fi
-
-
-
-
 if [ "$VALUE_R" = "0" ]; then
-    # red off
-    echo "@??001!" > /dev/ttyS0
-fi
-if [ "$VALUE_R" = "1" ]; then
+    # red stop off
+    echo "@??021!" > /dev/ttyS0
+elif [ "$VALUE_R" = "1" ]; then
     # red on
     echo "@??101!" > /dev/ttyS0
+elif [ "$VALUE_R" = "2" ]; then
+    # red off
+    echo "@??001!" > /dev/ttyS0
+    # red blink 
+    echo "@??120!" > /dev/ttyS0
 fi
 
 
 if [ "$VALUE_G" == "0" ]; then
-# green off
-    echo "@??004!" > /dev/ttyS0
-fi
-if [ "$VALUE_G" == "1" ]; then
+    # green stop off
+    echo "@??084!" > /dev/ttyS0
+elif [ "$VALUE_G" == "1" ]; then
     # green on
     echo "@??104!" > /dev/ttyS0
+elif [ "$VALUE_G" == "2" ]; then
+    # green off
+    echo "@??004!" > /dev/ttyS0
+    # green blink
+    echo "@??180!" > /dev/ttyS0
 fi
 
 
 if [ "$VALUE_Y" == "0" ]; then
-    # yellow off
-    echo "@??002!" > /dev/ttyS0
-fi
-
-if [ "$VALUE_Y" == "1" ]; then
+    # yellow stop off
+    echo "@??042!" > /dev/ttyS0
+elif [ "$VALUE_Y" == "1" ]; then
     # yellow on
     echo "@??102!" > /dev/ttyS0
+elif [ "$VALUE_Y" == "2" ]; then
+    # yellow off
+    echo "@??002!" > /dev/ttyS0
+    # yellow blink
+    echo "@??140!" > /dev/ttyS0
 fi
