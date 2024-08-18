@@ -1,4 +1,5 @@
 # serial_patlite 
 
-name is serial patlite,
-but there are scripts for both serial_patlite and network_patlite.
+If you want to use Network Patlite,
+https://github.com/skyhobbit/network_patlite/
+for more information.
